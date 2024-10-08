@@ -1,15 +1,30 @@
-<script setup>
+<script setup lang="ts">
+import { ref } from 'vue'
 
+const currentTime = "10:00 pm"
+
+// Update currentTime logic here (e.g., setInterval)
 </script>
 
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 card align-items-center shadow rounded elevation-3">
-      <img src="@/assets/img/cw-circle-logo.png" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div>
+    <div class="container">
+      <div class="row fill-page">
+        <div class="col-4 top-0 start-0 p-3">
+          <p class="mb-0">Image by</p>
+          <p class="mb-0">creator name here</p>
+        </div>
+        <div class="col-4">
+          <div class="row justify-content-center align-items-center h-100">
+            <div class="col-auto">
+              <h1 class="text-center time-size">{{ currentTime }}</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,5 +48,16 @@
       object-position: center;
     }
   }
+}
+
+.fill-page {
+  height: 100vh;
+}
+
+.time-size {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 </style>
