@@ -25,7 +25,7 @@ async function getBackgroundImage() {
 
 <template>
   <div class="background-image" :style="{ backgroundImage: bgImage ? `url(${bgImage.imgUrl})` : 'none'}">
-    <div class="container">
+    <div class="container-fluid text-light">
       <div class="row fill-page">
         <div class="col-4 top-0 start-0 p-3">
           <p class="mb-0">Image by</p>
@@ -74,7 +74,6 @@ async function getBackgroundImage() {
 .time-size {
   font-size: 4rem;
   font-weight: bold;
-  color: #333;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
