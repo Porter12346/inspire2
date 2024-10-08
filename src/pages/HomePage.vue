@@ -1,13 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { imageService } from '@/services/ImageService.js';
+import Pop from '@/utils/Pop.js';
+import { onMounted, ref } from 'vue'
+
+onMounted(() => {
+  getBackgroundImage()
+})
 
 const currentTime = "10:00 pm"
 
+const bgImage = ref()
 // Update currentTime logic here (e.g., setInterval)
+
+async function getBackgroundImage() {
+  try {
+    const image = await imageService.getBackgroundImage()
+    bgImage.value = image
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 </script>
 
 <template>
-  <div>
+  <div class="background-image" :style="{ backgroundImage: bgImage ? `url(${bgImage.imgUrl})` : 'none'}">
     <div class="container">
       <div class="row fill-page">
         <div class="col-4 top-0 start-0 p-3">
@@ -16,7 +33,7 @@ const currentTime = "10:00 pm"
         </div>
         <div class="col-4">
           <div class="row justify-content-center align-items-center h-100">
-            <div class="col-auto">
+            <div class="col-12">
               <h1 class="text-center time-size">{{ currentTime }}</h1>
             </div>
           </div>
@@ -60,4 +77,10 @@ const currentTime = "10:00 pm"
   color: #333;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.background-image {
+  background-size: cover;
+  background-position: center;
+}
+
 </style>
