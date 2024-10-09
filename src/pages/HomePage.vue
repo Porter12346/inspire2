@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { imageService } from '@/services/ImageService.js';
+import { weatherService } from '@/services/weatherService.js';
 import Pop from '@/utils/Pop.js';
 import { onMounted, ref } from 'vue'
 
 onMounted(() => {
   getBackgroundImage()
+  getWeather()
 })
 
 const currentTime = "10:00 pm"
 
 const bgImage = ref()
+const temp = ref()
 // Update currentTime logic here (e.g., setInterval)
 
 async function getBackgroundImage() {
@@ -21,25 +24,36 @@ async function getBackgroundImage() {
     Pop.error(error);
   }
 }
+
+async function getWeather() {
+  try {
+    const weather = await weatherService.getWeather()
+    temp.value = weather
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 </script>
 
 <template>
   <div class="background-image" :style="{ backgroundImage: bgImage ? `url(${bgImage.imgUrl})` : 'none'}">
     <div class="container-fluid text-light">
-      <div class="row fill-page">
+      <div class="row fill-page"> 
         <div class="col-4 top-0 start-0 p-3">
-          <p class="mb-0">Image by</p>
-          <p class="mb-0">creator name here</p>
+          <p class="mb-0 text">Image by</p>
+          <p class="mb-0"> {{ bgImage?.author }} </p>
         </div>
         <div class="col-4">
           <div class="row justify-content-center align-items-center h-100">
             <div class="col-12">
-              <h1 class="text-center time-size">{{ currentTime }}</h1>
+              <h1 class="text-center time-size text-shadow">{{ currentTime }}</h1>
             </div>
           </div>
         </div>
         <div class="col-4">
-
+          <p class="mb-0 text">Temp</p>
+          <p class="mb-0 text">{{ temp }}</p>
         </div>
       </div>
     </div>
@@ -80,6 +94,10 @@ async function getBackgroundImage() {
 .background-image {
   background-size: cover;
   background-position: center;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
 }
 
 </style>
