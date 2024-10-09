@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { imageService } from '@/services/ImageService.js';
+import { quoteService } from '@/services/QuoteService.js';
 import { weatherService } from '@/services/weatherService.js';
 import Pop from '@/utils/Pop.js';
 import { onMounted, ref } from 'vue'
@@ -7,12 +8,14 @@ import { onMounted, ref } from 'vue'
 onMounted(() => {
   getBackgroundImage()
   getWeather()
+  getQuote()
 })
 
 const currentTime = "10:00 pm"
 
 const bgImage = ref()
 const temp = ref()
+const quote = ref()
 // Update currentTime logic here (e.g., setInterval)
 
 async function getBackgroundImage() {
@@ -34,6 +37,17 @@ async function getWeather() {
     Pop.error(error);
   }
 }
+
+async function getQuote() {
+  try {
+    const quote = await quoteService.getQuote()
+    console.log(quote)
+    quote.value = quote
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 </script>
 
 <template>
@@ -44,16 +58,24 @@ async function getWeather() {
           <p class="mb-0 text">Image by</p>
           <p class="mb-0"> {{ bgImage?.author }} </p>
         </div>
-        <div class="col-4">
-          <div class="row justify-content-center align-items-center h-100">
+
+        <div class="col-4 h-100 d-flex flex-column justify-content-between">
+          <p></p>
+          <div class="row justify-content-center align-items-center">
             <div class="col-12">
               <h1 class="text-center time-size text-shadow">{{ currentTime }}</h1>
             </div>
           </div>
+          <div>
+            <p>inspiration</p>
+          </div>
         </div>
-        <div class="col-4">
+
+        <div class="col-4 text-end fs-3">
+          <div>
           <p class="mb-0 text">Temp</p>
-          <p class="mb-0 text">{{ temp }}</p>
+          <p class="mb-0 text px-2">{{ temp }}</p>
+          </div>
         </div>
       </div>
     </div>
