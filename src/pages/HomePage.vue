@@ -8,14 +8,14 @@ import { onMounted, ref } from 'vue'
 onMounted(() => {
   getBackgroundImage()
   getWeather()
-  getQuote()
+  // getQuote()
 })
 
 const currentTime = "10:00 pm"
 
 const bgImage = ref()
 const temp = ref()
-const quote = ref()
+// const quote = ref()
 // Update currentTime logic here (e.g., setInterval)
 
 async function getBackgroundImage() {
@@ -51,9 +51,9 @@ async function getQuote() {
 </script>
 
 <template>
-  <div class="background-image" :style="{ backgroundImage: bgImage ? `url(${bgImage.imgUrl})` : 'none'}">
+  <div class="background-image" :style="{ backgroundImage: bgImage ? `url(${bgImage.imgUrl})` : 'none' }">
     <div class="container-fluid text-light">
-      <div class="row fill-page"> 
+      <div class="row fill-page">
         <div class="col-4 top-0 start-0 p-3">
           <p class="mb-0 text">Image by</p>
           <p class="mb-0"> {{ bgImage?.author }} </p>
@@ -71,13 +71,19 @@ async function getQuote() {
           </div>
         </div>
 
-        <div class="col-4 text-end fs-3">
-          <div>
-          <p class="mb-0 text">Temp</p>
-          <p class="mb-0 text px-2">{{ temp }}</p>
+        <div class="col-4 text-center fs-3">
+          <div class="row">
+          <div class="col-9">       
           </div>
+          <div class="bg-dark col-3">
+            <span class="mb-0 text bg-dark">Temp</span>
+            <br>
+            <span class="mb-0 text px-2 bg-dark">{{ temp }}</span>
+          </div>
+
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -121,5 +127,4 @@ async function getQuote() {
 .text-shadow {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
 }
-
 </style>
